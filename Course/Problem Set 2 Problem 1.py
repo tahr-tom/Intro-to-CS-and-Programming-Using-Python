@@ -1,11 +1,11 @@
 balance = 42
-annualInterestRate = 0.2
-monthlyPaymentRate = 0.04
+annual_interest_rate = 0.2
+monthly_payment_rate = 0.04
 
 currentMonth = 1
 while currentMonth < 13:
-    monthminpay = balance * monthlyPaymentRate
-    monthunpaidbalance = balance - monthminpay
-    balance = round(monthunpaidbalance + monthunpaidbalance * (annualInterestRate / 12), 2)
+    month_min_payment = balance * monthly_payment_rate
+    monthly_unpaid_balance = balance - month_min_payment
+    balance = round(monthly_unpaid_balance + monthly_unpaid_balance * (annual_interest_rate / 12), 2)
     currentMonth += 1
 print(balance)
