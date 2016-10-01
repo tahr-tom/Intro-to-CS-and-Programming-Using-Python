@@ -144,21 +144,27 @@ def hangman(secretWord):
         print(available, getAvailableLetters(letterGuessed))
         guess = input('Please guess a letter: ')
         guesslower = guess.lower()
+        # repeated guess
         if guesslower in letterGuessed:
             print(same, getGuessedWord(secretWord, letterGuessed))
             print(format_line)
+        # new guess
         else:
             letterGuessed += guesslower
+            # same guess
             if guesslower in secretWord:
                 print(right, getGuessedWord(secretWord, letterGuessed))
                 print(format_line)
+            # wrong guess
             else:
                 print(wrong, getGuessedWord(secretWord, letterGuessed))
                 print(format_line)
                 chance -= 1
+        # win section
         if isWordGuessed(secretWord, letterGuessed):
             print(win)
             break
+    # lose section
     if not(isWordGuessed(secretWord, letterGuessed)):
         print(lose, ans_reveal, secretWord)
 # When you've completed your hangman function, uncomment these two lines
