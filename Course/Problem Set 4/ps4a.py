@@ -8,7 +8,8 @@ CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
 HAND_SIZE = 7
 
 SCRABBLE_LETTER_VALUES = {
-    'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
+    'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1,
+    'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
 }
 
 # -----------------------------------
@@ -16,6 +17,7 @@ SCRABBLE_LETTER_VALUES = {
 # (you don't need to understand this helper code)
 
 WORDLIST_FILENAME = "words.txt"
+
 
 def loadWords():
     """
@@ -34,6 +36,7 @@ def loadWords():
     print("  ", len(wordList), "words loaded.")
     return wordList
 
+
 def getFrequencyDict(sequence):
     """
     Returns a dictionary where the keys are elements of the sequence
@@ -46,7 +49,7 @@ def getFrequencyDict(sequence):
     # freqs: dictionary (element_type -> int)
     freq = {}
     for x in sequence:
-        freq[x] = freq.get(x,0) + 1
+        freq[x] = freq.get(x, 0) + 1
     return freq
 
 
@@ -103,8 +106,9 @@ def displayHand(hand):
     """
     for letter in hand.keys():
         for j in range(hand[letter]):
-             print(letter,end=" ")       # print all on the same line
-    print()                             # print an empty line
+            print(letter, end=" ")  # print all on the same line
+    print()  # print an empty line
+
 
 #
 # Problem #2: Make sure you understand how this function works and what it does!
@@ -121,18 +125,19 @@ def dealHand(n):
     n: int >= 0
     returns: dictionary (string -> int)
     """
-    hand={}
+    hand = {}
     numVowels = n // 3
 
     for i in range(numVowels):
-        x = VOWELS[random.randrange(0,len(VOWELS))]
+        x = VOWELS[random.randrange(0, len(VOWELS))]
         hand[x] = hand.get(x, 0) + 1
 
     for i in range(numVowels, n):
-        x = CONSONANTS[random.randrange(0,len(CONSONANTS))]
+        x = CONSONANTS[random.randrange(0, len(CONSONANTS))]
         hand[x] = hand.get(x, 0) + 1
 
     return hand
+
 
 #
 # Problem #2: Update a hand by removing letters
@@ -214,7 +219,6 @@ def calculateHandlen(hand):
     return len(hand_list)
 
 
-
 def playHand(hand, wordList, n):
     """
     Allows the user to play the given hand, as follows:
@@ -243,7 +247,7 @@ def playHand(hand, wordList, n):
     while calculateHandlen(hand) >= 1:
         # Display the hand
 
-        print('Current Hand:', end = "")
+        print('Current Hand:', end="")
         displayHand(hand)
         # Ask user for input
         word = input('Enter word, or a "." to indicate that you are finished: ')
@@ -255,7 +259,7 @@ def playHand(hand, wordList, n):
         # Otherwise (the input is not a single period):
         else:
             # If the word is not valid:
-            if not(isValidWord(word, hand, wordList)):
+            if not (isValidWord(word, hand, wordList)):
                 # Reject invalid word (print a message followed by a blank line)
                 print('Invalid word, please try again.')
                 print('')
@@ -276,6 +280,8 @@ def playHand(hand, wordList, n):
     else:
         print('Goodbye! Total score:', total_score, 'points,')
         print('')
+
+
 #
 # Problem #5: Playing a game
 # 
@@ -313,14 +319,9 @@ def playGame(wordList):
             break
 
 
-
-
-
-
-
 #
 # Build data structures used for entire session and play game
 #
 if __name__ == '__main__':
-     wordList = loadWords()
-     playGame(wordList)
+    wordList = loadWords()
+    playGame(wordList)
