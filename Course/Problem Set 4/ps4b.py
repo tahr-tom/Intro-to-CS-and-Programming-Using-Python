@@ -95,7 +95,6 @@ def compPlayHand(hand, wordList, n):
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
     print('Total score: ' + str(totalScore) + ' points.')
 
-    
 #
 # Problem #6: Playing a game
 #
@@ -103,7 +102,7 @@ def compPlayHand(hand, wordList, n):
 def playGame(wordList):
     """
     Allow the user to play an arbitrary number of hands.
- 
+
     1) Asks the user to input 'n' or 'r' or 'e'.
         * If the user inputs 'e', immediately exit the game.
         * If the user inputs anything that's not 'n', 'r', or 'e', keep asking them again.
@@ -114,24 +113,62 @@ def playGame(wordList):
     3) Switch functionality based on the above choices:
         * If the user inputted 'n', play a new (random) hand.
         * Else, if the user inputted 'r', play the last hand again.
-      
+
         * If the user inputted 'u', let the user play the game
           with the selected hand, using playHand.
-        * If the user inputted 'c', let the computer play the 
+        * If the user inputted 'c', let the computer play the
           game with the selected hand, using compPlayHand.
 
     4) After the computer or user has played the hand, repeat from step 1
 
     wordList: list (string)
     """
+    while True:
+        user_input_1 = input('Enter n to deal a new hand, r to replay the last hand, or e to end game: ')
+        if user_input_1 == 'n' or user_input_1 == 'r':
+            while user_input_1 == 'n':
+                this_hand = dealHand(HAND_SIZE)
+                user_input_2 = input('Enter u to have yourself play, c to have the computer play: ')
+                if user_input_2 == 'u':
+                    playHand(this_hand, wordList, HAND_SIZE)
+                    break
+                elif user_input_2 == 'c':
+                    compPlayHand(this_hand, wordList, HAND_SIZE)
+                    break
+                else:
+                    print('Invalid command.')
+            while user_input_1 == 'r':
+                try:
+                    while type(this_hand) == dict:
+                        break
+                except NameError:
+                    print('You have not played a hand yet. Please play a new hand first!')
+                    break
+                user_input_2 = input('Enter u to have yourself play, c to have the computer play: ')
+                if user_input_2 == 'u':
+                    playHand(this_hand, wordList, HAND_SIZE)
+                    break
+                elif user_input_2 == 'c':
+                    compPlayHand(this_hand, wordList, HAND_SIZE)
+                    break
+                else:
+                    print('Invalid command.')
+        while user_input_1 not in ['n', 'e', 'r']:
+            print('Invalid command.')
+            break
+        if user_input_1 == 'e':
+            break
+
 
 
         
-#
+
 # Build data structures used for entire session and play game
 #
 if __name__ == '__main__':
     wordList = loadWords()
     playGame(wordList)
-
+# wordList = loadWords()
+# this_hand = dealHand(HAND_SIZE)
+# compChooseWord({'a': 1, 'p': 2, 's': 1, 'e': 1, 'l': 1}, wordList, 6)
 
