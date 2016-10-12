@@ -127,12 +127,13 @@ def playGame(wordList):
         user_input_1 = input('Enter n to deal a new hand, r to replay the last hand, or e to end game: ')
         if user_input_1 == 'n' or user_input_1 == 'r':
             while user_input_1 == 'n':
-                this_hand = dealHand(HAND_SIZE)
                 user_input_2 = input('Enter u to have yourself play, c to have the computer play: ')
                 if user_input_2 == 'u':
+                    this_hand = dealHand(HAND_SIZE)
                     playHand(this_hand, wordList, HAND_SIZE)
                     break
                 elif user_input_2 == 'c':
+                    this_hand = dealHand(HAND_SIZE)
                     compPlayHand(this_hand, wordList, HAND_SIZE)
                     break
                 else:
