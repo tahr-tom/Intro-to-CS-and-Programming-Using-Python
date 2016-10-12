@@ -192,10 +192,7 @@ def isValidWord(word, hand, wordList):
     not_empty = True
     if word == '':
         not_empty = False
-    in_wordlist = False
-    if word in wordList:
-        in_wordlist = True
-    if in_hand and not_empty and in_wordlist:
+    if in_hand and not_empty and word in wordList:
         return True
     else:
         return False
