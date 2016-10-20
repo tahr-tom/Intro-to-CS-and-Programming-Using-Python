@@ -246,8 +246,37 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         '''
-        trial = 1
-        while trial != 26:
+        text_list = self.message_text.split(' ')
+        text_length = len(text_list)
+        shift = 0
+        best_shift = 0
+        valid_word = 0
+        while shift in range(0, 25):  # Testing each shift
+            # print(shift)
+            previous_valid_word = valid_word
+            valid_word = 0
+            for word in text_list:  # In each shift test, test all words in the string
+                text = Message(word)
+                decrypt = text.apply_shift(shift)
+                # print(decrypt)
+                if is_word(self.valid_words, decrypt):  # Check if that word is valid
+                    valid_word += 1
+            if valid_word == 0:
+                shift += 1
+            elif text_length - valid_word < text_length - previous_valid_word:
+                best_shift = shift
+                shift += 1
+            elif text_length - valid_word >= text_length - previous_valid_word:
+                shift += 1
+        ans_list = []
+        # print('The best shift is ' + str(best_shift))
+        for word in text_list:
+            text = Message(word)
+            decrypt = text.apply_shift(best_shift)
+            ans_list.append(decrypt)
+        ans_string = ' '.join(ans_list)
+        ans_tup = (best_shift, ans_string)
+        return ans_tup
 
 
 
@@ -255,8 +284,33 @@ class CiphertextMessage(Message):
 # plaintext = PlaintextMessage('hello', 2)
 # print('Expected Output: jgnnq')
 # print('Actual Output:', plaintext.get_message_text_encrypted())
-    
+
 #Example test case (CiphertextMessage)
 # ciphertext = CiphertextMessage('jgnnq')
 # print('Expected Output:', (24, 'hello'))
 # print('Actual Output:', ciphertext.decrypt_message())
+
+
+# Function for testing
+def all_shift_test(text):
+    fail_list = []
+    for shift in range(0, 26):
+        print('Current shift: ', shift)
+        plaintext = PlaintextMessage(text, shift)
+        encryption = plaintext.get_message_text_encrypted()
+        ciphertext = CiphertextMessage(encryption)
+        if ciphertext.decrypt_message()[1] != text:
+            fail_list.append(str(shift))
+    if len(fail_list) == 0:
+        print('Every shift is ok!')
+    else:
+        print('Shift: ', ', '.join(fail_list), 'is not working!')
+
+
+# all_shift_test('nerf, this!')
+# all_shift_test('happy')
+
+def decrypt_story():
+    text = get_story_string()
+    Story = CiphertextMessage(text)
+    return Story.decrypt_message()
